@@ -1,7 +1,7 @@
 # FROM armhf/debian:stretch-slim AS buildstep
 #FROM debian:stretch-slim AS buildstep
-#FROM resin/raspberrypi3-debian:stretch AS buildstep
-FROM armhf/ubuntu:16.10 AS buildstep
+FROM resin/raspberrypi3-debian:stretch AS buildstep
+#FROM armhf/ubuntu:16.10 AS buildstep
 
 WORKDIR /root
 
@@ -26,8 +26,8 @@ WORKDIR /rust
 COPY . .
 RUN cargo build -vv --release
 
-FROM armhf/ubuntu:16.10
-# FROM armhf/debian:stretch-slim
+#FROM armhf/ubuntu:16.10
+FROM armhf/debian:stretch-slim
 #FROM debian:stretch-slim
 WORKDIR /root/
 
