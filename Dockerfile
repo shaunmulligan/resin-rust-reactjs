@@ -1,7 +1,6 @@
-# FROM armhf/debian:stretch-slim AS buildstep
+FROM armhf/debian:stretch-slim
 #FROM debian:stretch-slim AS buildstep
-FROM resin/raspberrypi3-debian:stretch 
-#AS buildstep
+#FROM resin/raspberrypi3-debian:stretch AS buildstep
 #FROM armhf/ubuntu:16.10 AS buildstep
 
 WORKDIR /root
@@ -32,5 +31,5 @@ FROM armhf/debian:stretch-slim
 #FROM debian:stretch-slim
 WORKDIR /root/
 
-COPY --from=buildstep /rust/target/release .
+COPY --from=0 /rust/target/release .
 CMD ["./multi-stage"]
