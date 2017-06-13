@@ -1,6 +1,7 @@
 # FROM armhf/debian:stretch-slim AS buildstep
 #FROM debian:stretch-slim AS buildstep
-FROM resin/raspberrypi3-debian:stretch AS buildstep
+FROM resin/raspberrypi3-debian:stretch 
+#AS buildstep
 #FROM armhf/ubuntu:16.10 AS buildstep
 
 WORKDIR /root
