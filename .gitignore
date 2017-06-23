@@ -1,3 +1,15 @@
 target
 Cargo.lock
 target
+
+node_modules/
+coverage/
+
+.dockerignore
+Dockerfile
+
+.env
+.eslintrc
+.editorconfig
+.gitlab-ci.yml
+
