@@ -1,7 +1,4 @@
-FROM armhf/debian:stretch-slim AS buildstep
-#FROM debian:stretch-slim AS buildstep
-#FROM resin/raspberrypi3-debian:stretch AS buildstep
-#FROM armhf/ubuntu:16.10 AS buildstep
+FROM resin/raspberrypi3-debian:stretch AS buildstep
 
 WORKDIR /root
 
@@ -23,13 +20,19 @@ ENV PATH=/root/.cargo/bin:$PATH
 RUN mkdir /.cargo
 
 WORKDIR /rust
-COPY . .
-RUN cargo build -vv --release
 
-#FROM armhf/ubuntu:16.10
-FROM armhf/debian:stretch-slim
-#FROM debian:stretch-slim
+# Build cargo deps first, to improve caching
+ADD Cargo.toml .
+RUN mkdir src && touch src/lib.rs && cargo build --release --lib
+
+# Bring in all source and build
+COPY . .
+RUN cargo build --release
+
+FROM arm32v7/debian:stretch-slim
+
 WORKDIR /root/
 
-COPY --from=buildstep /rust/target/release .
+COPY --from=buildstep /rust/target/release/multi-stage multi-stage
+ENV ROCKET_ENV=stage
 CMD ["./multi-stage"]
